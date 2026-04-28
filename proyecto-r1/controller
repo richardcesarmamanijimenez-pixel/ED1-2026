@@ -1,0 +1,56 @@
+import tkinter as tk
+from tkinter import messagebox
+from model.listaTasks import ListaTareas
+from view.interfaz import TodoView
+
+
+class TodoController:
+    def __init__(self, root):
+        self.modelo = ListaTareas()
+        self.vista = TodoView(root)
+
+        self.vista.btn_agregar.config(command=self.manejador_agregar)
+        self.vista.btn_completar.config(command=self.manejador_completar)
+        self.vista.btn_eliminar.config(command=self.manejador_eliminar)
+
+    def actualizar_vista(self):
+        self.vista.listbox.delete(0, tk.END)
+        actual = self.modelo.cabeza
+        while actual is not None:
+            icono = "[✓]" if actual.estado == 'completada' else "[○] "
+            self.vista.listbox.insert(tk.END, f"{icono}{actual.datos}")
+            actual = actual.siguiente
+
+    def manejador_agregar(self):
+        texto = self.vista.obtener_entrada()
+        if texto:
+            self.modelo.agregar_al_final(texto)
+            self.vista.limpiar_entrada()
+            self.actualizar_vista()
+        else:
+            messagebox.showwarning("Error", "Escribe una tarea.")
+
+    def manejador_completar(self):
+        tarea = self.vista.obtener_seleccion()
+        if tarea and self.modelo.marcar_completada(tarea):
+            self.actualizar_vista()
+        else:
+            messagebox.showinfo("Info", "Selecciona una tarea pendiente.")
+
+    def actualizar_tabla_visual(self):
+        self.vista.limpiar_listbox()
+        
+        actual = self.modelo.cabeza
+
+        while actual is not None:
+            icono = "[✓] " if actual.estado == 'completada' else "[○] "
+            linea_texto = f"{icono}{actual.datos}"
+        
+            self.vista.insertar_en_listbox(linea_texto)
+
+            actual = actual.siguiente
+
+    def manejador_eliminar(self):
+        tarea = self.vista.obtener_seleccion()
+        if tarea and self.modelo.eliminar_tarea(tarea):
+            self.actualizar_vista()
