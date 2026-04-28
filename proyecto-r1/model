@@ -1,0 +1,86 @@
+class Nodo:
+    def __init__(self, datos: str):
+        self.datos = datos
+        self.estado = 'pendiente'
+        self.siguiente = None
+ 
+class ListaTareas:
+ 
+    def __init__(self):
+        self.cabeza = None
+ 
+ 
+    def agregar_al_final(self, datos: str) -> None:
+        nuevo = Nodo(datos)
+        if self.cabeza is None:
+            self.cabeza = nuevo
+        else:
+            actual = self.cabeza
+            while actual.siguiente is not None:
+                actual = actual.siguiente
+            actual.siguiente = nuevo
+        print(f"  [+] Tarea agregada al final: '{datos}'")
+ 
+    def agregar_al_principio(self, datos: str) -> None:
+
+        nuevo = Nodo(datos)
+        nuevo.siguiente = self.cabeza
+        self.cabeza = nuevo
+        print(f"  [+] Tarea agregada al principio: '{datos}'")
+ 
+ 
+    def marcar_completada(self, datos: str) -> None:
+
+        actual = self.cabeza
+        while actual is not None:
+            if actual.datos.lower() == datos.lower():
+                actual.estado = 'completada'
+                print(f"  [✓] Tarea completada: '{datos}'")
+                return
+            actual = actual.siguiente
+        print(f" Tarea no encontrada: '{datos}'")
+ 
+
+    def eliminar_tarea(self, datos: str) -> None:
+
+        if self.cabeza is None:
+            print("  [!] La lista está vacía.")
+            return
+ 
+        if self.cabeza.datos.lower() == datos.lower():
+            self.cabeza = self.cabeza.siguiente
+            print(f"  [-] Tarea eliminada: '{datos}'")
+            return
+ 
+        anterior = self.cabeza
+        actual = self.cabeza.siguiente
+        while actual is not None:
+            if actual.datos.lower() == datos.lower():
+                anterior.siguiente = actual.siguiente
+                print(f"  [-] Tarea eliminada: '{datos}'")
+                return
+            anterior = actual
+            actual = actual.siguiente
+ 
+        print(f"  [!] Tarea no encontrada: '{datos}'")
+ 
+
+    def mostrar_tareas(self) -> None:
+        
+        print("\n" + "═" * 45)
+        print("  LISTA DE TAREAS")
+        print("═" * 45)
+ 
+        if self.cabeza is None:
+            print("  (sin tareas)")
+        else:
+            actual = self.cabeza
+            numero = 1
+            while actual is not None:
+                icono = "✓" if actual.estado == 'completada' else "○"
+                print(f"  {numero}. [{icono}] {actual.datos}  — {actual.estado.upper()}")
+                actual = actual.siguiente
+                numero += 1
+ 
+        print("═" * 45 + "\n")
+ 
