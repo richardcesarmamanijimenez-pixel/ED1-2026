@@ -1,0 +1,118 @@
+# 📝 Lista de Tareas — Todo App
+
+Aplicación de escritorio para gestión de tareas personales, desarrollada en Python con interfaz gráfica Tkinter. Implementa una **lista enlazada simple** como estructura de datos principal, siguiendo el patrón de arquitectura **MVC (Modelo - Vista - Controlador)**.
+
+---
+
+## 🗂️ Estructura del Proyecto
+
+```
+proyecto/
+└── Mamani Jimenez_Richard Cesar/
+    ├── main.py                    # Punto de entrada de la aplicación
+    ├── requirements.txt           # Dependencias del proyecto
+    ├── model/
+    │   └── listaTasks.py          # Modelo: lista enlazada de tareas (Nodo + ListaTareas)
+    ├── controller/
+    │   └── controllerTask.py      # Controlador: lógica de negocio y eventos
+    └── view/
+        └── interfaz.py            # Vista: interfaz gráfica con Tkinter
+```
+
+---
+
+## 🏗️ Arquitectura MVC
+
+El proyecto está organizado bajo el patrón **Modelo - Vista - Controlador**:
+
+| Capa | Archivo | Responsabilidad |
+|---|---|---|
+| **Modelo** | `model/listaTasks.py` | Estructura de datos (lista enlazada), operaciones CRUD sobre tareas |
+| **Vista** | `view/interfaz.py` | Interfaz gráfica, widgets de entrada y visualización |
+| **Controlador** | `controller/controllerTask.py` | Conecta modelo y vista, maneja eventos del usuario |
+
+---
+
+## ⚙️ Estructura de Datos
+
+Se implementa una **lista enlazada simple** compuesta por dos clases:
+
+### `Nodo`
+Representa cada tarea individual:
+- `datos` — texto de la tarea
+- `estado` — `'pendiente'` o `'completada'`
+- `siguiente` — referencia al siguiente nodo
+
+### `ListaTareas`
+Gestiona la colección de nodos con los siguientes métodos:
+
+| Método | Descripción |
+|---|---|
+| `agregar_al_final(datos)` | Agrega una tarea al final de la lista |
+| `agregar_al_principio(datos)` | Agrega una tarea al inicio de la lista |
+| `marcar_completada(datos)` | Cambia el estado de una tarea a `'completada'` |
+| `eliminar_tarea(datos)` | Elimina una tarea por su nombre |
+| `mostrar_tareas()` | Imprime la lista en consola (debug) |
+
+---
+
+## 🖥️ Interfaz Gráfica
+
+La ventana principal (`400x400 px`) incluye:
+
+- **Campo de texto** — para ingresar el nombre de la nueva tarea
+- **Botón "Agregar"** — añade la tarea a la lista
+- **Listbox** — muestra todas las tareas con íconos de estado:
+  - `[○]` Tarea pendiente
+  - `[✓]` Tarea completada
+- **Botón "Marcar Completada"** — marca la tarea seleccionada como completada
+- **Botón "Eliminar"** — elimina la tarea seleccionada de la lista
+
+---
+
+## 🚀 Instalación y Ejecución
+
+### Requisitos previos
+
+- Python 3.10 o superior
+- `tkinter` (incluido por defecto en la mayoría de instalaciones de Python)
+
+### Pasos
+
+1. **Clona o descomprime el proyecto:**
+   ```bash
+   cd "Mamani Jimenez_Richard Cesar"
+   ```
+
+2. **Instala las dependencias** (si las hubiera):
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Ejecuta la aplicación:**
+   ```bash
+   python main.py
+   ```
+
+---
+
+## 📖 Uso
+
+1. Escribe el nombre de la tarea en el campo de texto.
+2. Presiona **"Agregar"** para añadirla a la lista.
+3. Selecciona una tarea del listbox y presiona **"Marcar Completada"** para marcarla con `[✓]`.
+4. Selecciona una tarea y presiona **"Eliminar"** para borrarla de la lista.
+
+---
+
+## 👤 Autor
+
+**Mamani Jimenez, Richard Cesar**
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Python 3** — Lenguaje de programación principal
+- **Tkinter** — Librería estándar para interfaces gráficas de escritorio
+- **Git** — Control de versiones
